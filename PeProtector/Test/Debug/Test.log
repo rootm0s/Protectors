@@ -1,0 +1,13 @@
+﻿  CommandTest.cpp
+  CompileTest.cpp
+  LexicalAnalizerTest.cpp
+  ResourcesTest.cpp
+  ProtectPeTest.cpp
+  PeHeaderTest.cpp
+  MutationTest.cpp
+  InstructionTest.cpp
+  ImportTest.cpp
+  DataTest.cpp
+  ClientFileTest.cpp
+  Generating Code...
+LINK : fatal error LNK1181: cannot open input file 'C:\Users\rmt01\Dropbox\WindowsBox\Kodning\Fusk\Protectors\PeProtector\PeProtector\Debug\Instruction.obj'
