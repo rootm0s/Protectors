@@ -1,0 +1,32 @@
+--------------------------------------------------------------------------
+Copyright © 2010 by learn_more
+Changelog.txt is part of the project 'SimpleObfuscation'.
+
+Please do not use this in payhacks.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY, without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+--------------------------------------------------------------------------
+
+v003: Re-release (public)
+
+v003: UC-Contributor private release
+	- Added 'xor <reg>, 0'
+	- Decreased the probability a jmp is inserted (from 2/6 to 2/7)
+	- Fixed bug in OBFUSCATENOPS (thx to Winslow)
+
+v002: UC-Contributor private release
+	- Added Jumpgate generation
+	- Added RUNONCE macro
+	- Added 'and <reg>, FFFFFFFF'
+	- Added 'or <reg>, 0'
+	- Added compatibility / version defines
+	- Small performance tweaks
+
+v001: Private testing release
+	- Added 'push <reg> pop <reg>'
+	- Added jump + jump randomization
+	- Renamed macros
+
+v000: Initial testing version, unreleased
