@@ -1,0 +1,667 @@
+
+
+   // Order of commands is important
+
+   OPCODE_FIRST(ADC, 0x14,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //14 ib ADC AL, imm8 ADD with carry imm8 to AL
+   OPCODE_NEXT( ADC, 0x66,0x15,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //15 iw ADC AX, imm16 ADD with carry imm16 to AX
+   OPCODE_NEXT( ADC, 0x15,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //15 id ADC EAX, imm32 ADD with carry imm32 to EAX
+   OPCODE_NEXT( ADC, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R2)     //80 /2 ib ADC r/m8, imm8 ADD with carry imm8 to r/m8
+   OPCODE_NEXT( ADC, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R2)
+   OPCODE_NEXT( ADC, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R2)     //81 /2 iw ADC r/m16,imm16 ADD with carry imm16 to r/m16
+   OPCODE_NEXT( ADC, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R2)
+   OPCODE_NEXT( ADC, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R2)     //81 /2 id ADC r/m32,imm32 ADD with CF imm32 to r/m32
+   OPCODE_NEXT( ADC, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R2)
+   OPCODE_NEXT( ADC, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R2)     //83 /2 ib ADC r/m16,imm8 ADD with CF sign-extended imm8 to r/m16
+   OPCODE_NEXT( ADC, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R2)
+   OPCODE_NEXT( ADC, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R2)     //83 /2 ib ADC r/m32,imm8 ADD with CF sign-extended imm8 into r/m32
+   OPCODE_NEXT( ADC, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R2)
+   OPCODE_NEXT( ADC, 0x10,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //10 / r ADC r/m8,r8 ADD with carry byte register to r/m8
+   OPCODE_NEXT( ADC, 0x10,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( ADC, 0x66,0x11,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //11 / r ADC r/m16,r16 ADD with carry r16 to r/m16
+   OPCODE_NEXT( ADC, 0x66,0x11,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( ADC, 0x11,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //11 / r ADC r/m32,r32 ADD with CF r32 to r/m32
+   OPCODE_NEXT( ADC, 0x11,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( ADC, 0x12,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //12 / r ADC r8,r/m8 ADD with carry r/m8 to byte register
+   OPCODE_NEXT( ADC, 0x12,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( ADC, 0x66,0x13,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //13 / r ADC r16,r/m16 ADD with carry r/m16 to r16
+   OPCODE_NEXT( ADC, 0x66,0x13,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( ADC, 0x13,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //13 / r ADC r32,r/m32 ADD with CF r/m32 to r32
+   OPCODE_NEXT( ADC, 0x13,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+																     
+   OPCODE_FIRST(ADD, 0x04,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //04 ib ADD AL, imm8 ADD imm8 to AL
+   OPCODE_NEXT( ADD, 0x66,0x05,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //05 iw ADD AX, imm16 ADD imm16 to AX
+   OPCODE_NEXT( ADD, 0x05,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //05 id ADD EAX, imm32 ADD imm32 to EAX
+   OPCODE_NEXT( ADD, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R0)     //80 /0 ib ADD r/m8,imm8 ADD imm8 to r/m8
+   OPCODE_NEXT( ADD, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R0)
+   OPCODE_NEXT( ADD, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R0)     //81 /0 iw ADD r/m16,imm16 ADD imm16 to r/m16
+   OPCODE_NEXT( ADD, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R0)
+   OPCODE_NEXT( ADD, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R0)     //81 /0 id ADD r/m32,imm32 ADD imm32 to r/m32
+   OPCODE_NEXT( ADD, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R0)
+   OPCODE_NEXT( ADD, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R0)     //83 /0 ib ADD r/m16,imm8 ADD sign-extended imm8 to r/m16
+   OPCODE_NEXT( ADD, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R0)
+   OPCODE_NEXT( ADD, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R0)     //83 /0 ib ADD r/m32,imm8 ADD sign-extended imm8 to r/m32
+   OPCODE_NEXT( ADD, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R0)
+   OPCODE_NEXT( ADD, 0x00,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //00 / r ADD r/m8,r8 ADD r8 to r/m8
+   OPCODE_NEXT( ADD, 0x00,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( ADD, 0x66,0x01,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //01 / r ADD r/m16,r16 ADD r16 to r/m16
+   OPCODE_NEXT( ADD, 0x66,0x01,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( ADD, 0x01,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //01 / r ADD r/m32,r32 ADD r32 to r/m32
+   OPCODE_NEXT( ADD, 0x01,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( ADD, 0x02,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //02 / r ADD r8,r/m8 ADD r/m8 to r8
+   OPCODE_NEXT( ADD, 0x02,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( ADD, 0x66,0x03,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //03 / r ADD r16,r/m16 ADD r/m16 to r16
+   OPCODE_NEXT( ADD, 0x66,0x03,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( ADD, 0x03,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //03 / r ADD r32,r/m32 ADD r/m32 to r32
+   OPCODE_NEXT( ADD, 0x03,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+																     
+   OPCODE_FIRST(AND, 0x24,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //24 ib AND AL, imm8 AL AND imm8
+   OPCODE_NEXT( AND, 0x66,0x25,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //25 iw AND AX, imm16 AX AND i mm16
+   OPCODE_NEXT( AND, 0x25,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //25 id AND EAX, imm32 EAX AND imm32
+   OPCODE_NEXT( AND, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R4)     //80 /4 ib AND r/m8,imm8 r/m8 AND imm8
+   OPCODE_NEXT( AND, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R4)
+   OPCODE_NEXT( AND, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R4)     //81 /4 iw AND r/m16,imm16 r/m16 AND imm16
+   OPCODE_NEXT( AND, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R4)
+   OPCODE_NEXT( AND, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R4)     //81 /4 id AND r/m32,imm32 r/m32 AND imm32
+   OPCODE_NEXT( AND, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R4)   
+   OPCODE_NEXT( AND, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R4)     //83 /4 ib AND r/m16,imm8 r/m16 AND imm8 (sign-extended)
+   OPCODE_NEXT( AND, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R4)
+   OPCODE_NEXT( AND, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R4)     //83 /4 ib AND r/m32,imm8 r/m32 AND imm8 (sign-extended)
+   OPCODE_NEXT( AND, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R4)
+   OPCODE_NEXT( AND, 0x20,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //20 /r AND r/m8,r8 r/m8 AND r8
+   OPCODE_NEXT( AND, 0x20,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( AND, 0x66,0x21,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //21 / r AND r/m16,r16 r/m16 AND r16
+   OPCODE_NEXT( AND, 0x66,0x21,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( AND, 0x21,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //21 / r AND r/m32,r32 r/m32 AND r32
+   OPCODE_NEXT( AND, 0x21,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)
+   OPCODE_NEXT( AND, 0x22,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //22 / r AND r8,r/m8 r8 AND r/m8
+   OPCODE_NEXT( AND, 0x22,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( AND, 0x66,0x23,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //23 / r AND r16,r/m16 r16 AND r/m16
+   OPCODE_NEXT( AND, 0x66,0x23,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( AND, 0x23,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //23 / r AND r32,r/m32 r32 AND r/m32
+   OPCODE_NEXT( AND, 0x23,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+
+   OPCODE_FIRST(CALL,0x66,0xe8,0x00,0x00, 0x02, REL16, NON,   NON,   EMPTY)  //E8 cw CALL rel16 Call near, relative, displacement relative to next instruction
+   OPCODE_NEXT( CALL,0xe8,0x00,0x00,0x00, 0x01, REL32, NON,   NON,   EMPTY)  //E8 cd CALL rel32 Call near, relative, displacement relative to next instruction
+   OPCODE_NEXT( CALL,0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R2)     //FF /2 CALL r/m16 Call near, absolute indirect, address given in r/m16
+   OPCODE_NEXT( CALL,0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R2)         
+   OPCODE_NEXT( CALL,0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R2)     //FF /2 CALL r/m32 Call near, absolute indirect, address given in r/m32
+   OPCODE_NEXT( CALL,0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R2)         
+                                                                             //9A cd CALL ptr16:16 Call far, absolute, address given in operAND
+                                                                             //9A cp CALL ptr16:32 Call far, absolute, address given in operAND
+ //OPCODE_NEXT( CALL,0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R3)     //FF /3 CALL m16:16 Call far, absolute indirect, address given in m16:16
+ //OPCODE_NEXT( CALL,0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R3)
+ //OPCODE_NEXT( CALL,0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R3)     //FF /3 CALL m16:32 Call far, absolute indirect, address given in m16:32
+ //OPCODE_NEXT( CALL,0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R3)
+
+   OPCODE_FIRST(RET, 0xc3,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //C3 RET Near RETurn to CALLing procedure
+                                                                             //CB RET Far RETurn to CALLing procedure
+   OPCODE_NEXT( RET, 0xc2,0x00,0x00,0x00, 0x01, IMM16, NON,   NON,   EMPTY)  //C2 iw RET imm16 Near RETurn to CALLing procedure AND POP imm16 bytes from stack
+                                                                             //CA iw RET imm16 Far RETurn to CALLing procedure AND POP imm16 bytes from stack
+   OPCODE_FIRST(CMP, 0x3c,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //3C ib CMP AL, imm8 Compare imm8 with AL
+   OPCODE_NEXT( CMP, 0x66,0x3d,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //3D iw CMP AX, imm16 Compare imm16 with AX
+   OPCODE_NEXT( CMP, 0x3d,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //3D id CMP EAX, imm32 Compare imm32 with EAX
+   OPCODE_NEXT( CMP, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R7)     //80 /7 ib CMP r/m8, imm8 Compare imm8 with r/m8
+   OPCODE_NEXT( CMP, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R7)
+   OPCODE_NEXT( CMP, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R7)     //81 /7 iw CMP r/m16, imm16 Compare imm16 with r/m16
+   OPCODE_NEXT( CMP, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R7)
+   OPCODE_NEXT( CMP, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R7)     //81 /7 id CMP r/m32,imm32 Compare imm32 with r/m32
+   OPCODE_NEXT( CMP, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R7)   
+   OPCODE_NEXT( CMP, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R7)     //83 /7 ib CMP r/m16,imm8 Compare imm8 with r/m16
+   OPCODE_NEXT( CMP, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R7)
+   OPCODE_NEXT( CMP, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R7)     //83 /7 ib CMP r/m32,imm8 Compare imm8 with r/m32
+   OPCODE_NEXT( CMP, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R7)
+   OPCODE_NEXT( CMP, 0x38,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //38 / r CMP r/m8,r8 Compare r8 with r/m8
+   OPCODE_NEXT( CMP, 0x38,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( CMP, 0x66,0x39,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //39 / r CMP r/m16,r16 Compare r16 with r/m16
+   OPCODE_NEXT( CMP, 0x66,0x39,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( CMP, 0x39,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //39 / r CMP r/m32,r32 Compare r32 with r/m32
+   OPCODE_NEXT( CMP, 0x39,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)
+   OPCODE_NEXT( CMP, 0x3a,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //3A / r CMP r8,r/m8 Compare r/m8 with r8
+   OPCODE_NEXT( CMP, 0x3a,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( CMP, 0x66,0x3b,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //3B / r CMP r16,r/m16 Compare r/m16 with r16
+   OPCODE_NEXT( CMP, 0x66,0x3b,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( CMP, 0x3b,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //3B / r CMP r32,r/m32 Compare r/m32 with r32
+   OPCODE_NEXT( CMP, 0x3b,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+
+   OPCODE_FIRST(CBW, 0x66,0x98,0x00,0x00, 0x02, NON,   NON,   NON,   EMPTY)  //98 CBW AX  sign-extend of AL
+   OPCODE_FIRST(CWDE,0x98,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //98 CWDE EAX  sign-extend of AX
+   OPCODE_FIRST(CWD, 0x66,0x99,0x00,0x00, 0x02, NON,   NON,   NON,   EMPTY)  //99 CWD DX:AX
+   OPCODE_FIRST(CDQ, 0x99,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //99 CDQ EDX:EAX
+
+   OPCODE_FIRST(CLC, 0xf8,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //F8 CLC CLEAr CF flag
+   OPCODE_FIRST(CLD, 0xfc,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //FC CLD CLEAr DF flag
+   OPCODE_FIRST(CLI, 0xfa,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //FA CLI CLEAr interrupt flag; interrupts disabled when interrupt
+
+   OPCODE_FIRST(CMPSB,0xa6,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //A6 CMPSB
+   OPCODE_FIRST(CMPSW,0x66,0xa7,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //A7 CMPSW
+   OPCODE_FIRST(CMPSD,0xa7,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //A7 CMPSD
+
+   OPCODE_FIRST(DIV, 0xf6,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R6)     //F6 /6 DIV r/m8 Unsigned DIVide AX by r/m8
+   OPCODE_NEXT( DIV, 0xf6,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R6)
+   OPCODE_NEXT( DIV, 0x66,0xf7,0x00,0x00, 0x02, REG16, NON,   NON,   R6)     //F7 /6 DIV r/m16 Unsigned DIVide DX:AX by r/m16; AX
+   OPCODE_NEXT( DIV, 0x66,0xf7,0x00,0x00, 0x02, MEM16, NON,   NON,   R6)
+   OPCODE_NEXT( DIV, 0xf7,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R6)     //F7 /6 DIV r/m32 Unsigned DIVide EDX:EAX by r/m32 doublewORd
+   OPCODE_NEXT( DIV, 0xf7,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R6)
+
+   OPCODE_FIRST(IDIV,0xf6,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R7)     //F6 /7 IDIV r/m8 Signed DIVide
+   OPCODE_NEXT( IDIV,0xf6,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R7)
+   OPCODE_NEXT( IDIV,0x66,0xf7,0x00,0x00, 0x02, REG16, NON,   NON,   R7)     //F7 /7 IDIV r/m16 Signed DIVide
+   OPCODE_NEXT( IDIV,0x66,0xf7,0x00,0x00, 0x02, MEM16, NON,   NON,   R7)            
+   OPCODE_NEXT( IDIV,0xf7,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R7)     //F7 /7 IDIV r/m32 Signed DIVide
+   OPCODE_NEXT( IDIV,0xf7,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R7)
+
+   OPCODE_FIRST(IMUL,0xf6,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R5)     //F6 /5 IMUL r/m8 AX¬ AL * r/m byte
+   OPCODE_NEXT( IMUL,0xf6,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R5)
+   OPCODE_NEXT( IMUL,0x66,0xf7,0x00,0x00, 0x02, REG16, NON,   NON,   R5)     //F7 /5 IMUL r/m16 DX:AX ¬ AX * r/m wORd
+   OPCODE_NEXT( IMUL,0x66,0xf7,0x00,0x00, 0x02, MEM16, NON,   NON,   R5)
+   OPCODE_NEXT( IMUL,0xf7,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R5)     //F7 /5 IMUL r/m32 EDX:EAX ¬ EAX * r/m doublewORd
+   OPCODE_NEXT( IMUL,0xf7,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R5)
+   OPCODE_NEXT( IMUL,0x66,0xaf,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //0F AF / r IMUL r16,r/m16 wORd register
+   OPCODE_NEXT( IMUL,0x66,0xaf,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( IMUL,0xaf,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //0F AF / r IMUL r32,r/m32 doublewORd register
+   OPCODE_NEXT( IMUL,0xaf,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+   OPCODE_NEXT( IMUL,0x66,0x6b,0x00,0x00, 0x02, REG16, REG16, IMM8,  R_RM)   //6B / r ib IMUL r16,r/m16,imm8 wORd register
+   OPCODE_NEXT( IMUL,0x66,0x6b,0x00,0x00, 0x02, REG16, MEM16, IMM8,  R_RM)
+   OPCODE_NEXT( IMUL,0x6b,0x00,0x00,0x00, 0x01, REG32, REG32, IMM8,  R_RM)   //6B / r ib IMUL r32,r/m32,imm8 doublewORd register byte
+   OPCODE_NEXT( IMUL,0x6b,0x00,0x00,0x00, 0x01, REG32, MEM32, IMM8,  R_RM)
+   OPCODE_NEXT( IMUL,0x66,0x6b,0x00,0x00, 0x02, REG16, IMM8,  NON,   R_RM)   //6B / r ib IMUL r16,imm8 wORd register
+   OPCODE_NEXT( IMUL,0x6b,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R_RM)   //6B / r ib IMUL r32,imm8 doublewORd register
+   OPCODE_NEXT( IMUL,0x66,0x69,0x00,0x00, 0x02, REG16, REG16, IMM16, RM_R)   //69 / r iw IMUL r16,r/ m16,imm16
+   OPCODE_NEXT( IMUL,0x66,0x69,0x00,0x00, 0x02, REG16, MEM16, IMM16, RM_R)
+   OPCODE_NEXT( IMUL,0x69,0x00,0x00,0x00, 0x01, REG32, REG32, IMM32, RM_R)   //69 / r id IMUL r32,r/ m32,imm32
+   OPCODE_NEXT( IMUL,0x69,0x00,0x00,0x00, 0x01, REG32, MEM32, IMM32, RM_R)
+   OPCODE_NEXT( IMUL,0x66,0x69,0x00,0x00, 0x02, REG16, IMM16, NON,   RM_R)   //69 / r iw IMUL r16,imm16 wORd register ¬ r/m16 * immediate wORd
+   OPCODE_NEXT( IMUL,0x69,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   RM_R)   //69 / r id IMUL r32,imm32 doublewORd register ¬ r/m32 * immediate doublewORd
+
+   OPCODE_FIRST(INC, 0xfe,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R0)     //FE /0 INC r/m8 Increment r/m byte by 1
+   OPCODE_NEXT( INC, 0xfe,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R0)
+   OPCODE_NEXT( INC, 0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R0)     //FF /0 INC r/m16 Increment r/m wORd by 1
+ //OPCODE_NEXT( INC, 0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R0)   
+   OPCODE_NEXT( INC, 0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R0)     //FF /0 INC r/m32 Increment r/m doublewORd by 1
+ //OPCODE_NEXT( INC, 0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R0)
+   OPCODE_NEXT( INC, 0x66,0x40,0x00,0x00, 0x02, REG16, NON,   NON,   PW)     //40+ rw INC r16 Increment wORd register by 1
+   OPCODE_NEXT( INC, 0x40,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   PD)     //40+ rd INC r32 Increment doublewORd register by 1
+
+   OPCODE_FIRST(DEC, 0xfe,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R1)     //FE /1 DEC r/m8 Decrement r/m8 by 1
+   OPCODE_NEXT( DEC, 0xfe,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R1)        
+   OPCODE_NEXT( DEC, 0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R1)     //FF /1 DEC r/m16 Decrement r/m16 by 1
+ //OPCODE_NEXT( DEC, 0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R1)
+   OPCODE_NEXT( DEC, 0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R1)     //FF /1 DEC r/m32 Decrement r/m32 by 1
+ //OPCODE_NEXT( DEC, 0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R1)        
+   OPCODE_NEXT( DEC, 0x66,0x48,0x00,0x00, 0x02, REG16, NON,   NON,   PW)     //48+rw DEC r16 Decrement r16 by 1
+   OPCODE_NEXT( DEC, 0x48,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   PD)     //48+rd DEC r32 Decrement r32 by 1
+
+   OPCODE_FIRST(JA,  0x77,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //77 cb JA rel8 Jump shORt if above (CF=0 AND ZF=0)
+   OPCODE_NEXT( JA,  0x66,0x0f,0x87,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 87 cw/cd JA rel16/32 Jump near if above (CF=0 AND ZF=0)
+   OPCODE_NEXT( JA,  0x0f,0x87,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JAE, 0x73,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //73 cb JAE rel8 Jump shORt if above OR equal (CF=0)
+   OPCODE_NEXT( JAE, 0x66,0x0f,0x83,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 83 cw/cd JAE rel16/32 Jump near if above OR equal (CF=0)
+   OPCODE_NEXT( JAE, 0x0f,0x83,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JB,  0x72,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //72 cb JB rel8 Jump shORt if below (CF=1)
+   OPCODE_NEXT( JB,  0x66,0x0f,0x82,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 82 cw/cd JB rel16/32 Jump near if below (CF=1)
+   OPCODE_NEXT( JB,  0x0f,0x82,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY) 
+   OPCODE_FIRST(JBE, 0x76,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //76 cb JBE rel8 Jump shORt if below OR equal (CF=1 OR ZF=1)
+   OPCODE_NEXT( JBE, 0x66,0x0f,0x86,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 86 cw/cd JBE rel16/32 Jump near if below OR equal (CF=1 OR ZF=1)
+   OPCODE_NEXT( JBE, 0x0f,0x86,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JC,  0x72,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //72 cb JC rel8 Jump shORt if carry (CF=1)
+   OPCODE_NEXT( JC,  0x66,0x0f,0x82,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 82 cw/cd JC rel16/32 Jump near if carry (CF=1)
+   OPCODE_NEXT( JC,  0x0f,0x82,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JCXZ,0x66,0xe3,0x00,0x00, 0x02, REL8,  NON,   NON,   EMPTY)  //E3 cb JCXZ rel8 Jump shORt if CX register is 0
+   OPCODE_FIRST(JECXZ,0xe3,0x00,0x00,0x00,0x01, REL8,  NON,   NON,   EMPTY)  //E3 cb JECXZ rel8 Jump shORt if ECX register is 0
+   OPCODE_FIRST(JE,  0x74,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //74 cb JE rel8 Jump shORt if equal (ZF=1)
+   OPCODE_NEXT( JE,  0x66,0x0f,0x84,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 84 cw/cd JE rel16/32 Jump near if equal (ZF=1)
+   OPCODE_NEXT( JE,  0x0f,0x84,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JG,  0x7f,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7F cb JG rel8 Jump shORt if greater (ZF=0 AND SF=OF)
+   OPCODE_NEXT( JG,  0x66,0x0f,0x8f,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8F cw/cd JG rel16/32 Jump near if greater (ZF=0 AND SF=OF)
+   OPCODE_NEXT( JG,  0x0f,0x8f,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JGE, 0x7d,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7D cb JGE rel8 Jump shORt if greater OR equal (SF=OF)
+   OPCODE_NEXT( JGE, 0x66,0x0f,0x8d,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8D cw/cd JGE rel16/32 Jump near if greater OR equal (SF=OF)
+   OPCODE_NEXT( JGE, 0x0f,0x8d,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JL,  0x7c,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7C cb JL rel8 Jump shORt if less (SF<>OF)
+   OPCODE_NEXT( JL,  0x66,0x0f,0x8c,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8C cw/cd JL rel16/32 Jump near if less (SF<>OF)
+   OPCODE_NEXT( JL,  0x0f,0x8c,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JLE, 0x7e,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7E cb JLE rel8 Jump shORt if less OR equal (ZF=1 OR SF<>OF)
+   OPCODE_NEXT( JLE, 0x66,0x0f,0x8e,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8E cw/cd JLE rel16/32 Jump near if less OR equal (ZF=1 OR SF<>OF)
+   OPCODE_NEXT( JLE, 0x0f,0x8e,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNA, 0x76,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //76 cb JNA rel8 Jump shORt if NOT above (CF=1 OR ZF=1)
+   OPCODE_NEXT( JNA, 0x66,0x0f,0x86,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 86 cw/cd JNA rel16/32 Jump near if NOT above (CF=1 OR ZF=1)
+   OPCODE_NEXT( JNA, 0x0f,0x86,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNAE,0x72,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //72 cb JNAE rel8 Jump shORt if NOT above OR equal (CF=1)
+   OPCODE_NEXT( JNAE,0x66,0x0f,0x82,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 82 cw/cd JNAE rel16/32 Jump near if NOT above OR equal (CF=1)
+   OPCODE_NEXT( JNAE,0x0f,0x82,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNB, 0x73,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //73 cb JNB rel8 Jump shORt if NOT below (CF=EMPTY)
+   OPCODE_NEXT( JNB, 0x66,0x0f,0x83,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 83 cw/cd JNB rel16/32 Jump near if NOT below (CF=0)
+   OPCODE_NEXT( JNB, 0x0f,0x83,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNBE,0x77,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //77 cb JNBE rel8 Jump shORt if NOT below OR equal (CF=0 AND ZF=0)
+   OPCODE_NEXT( JNBE,0x66,0x0f,0x87,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 87 cw/cd JNBE rel16/32 Jump near if NOT below OR equal (CF=0 AND ZF=0)
+   OPCODE_NEXT( JNBE,0x0f,0x87,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNC, 0x73,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //73 cb JNC rel8 Jump shORt if NOT carry (CF=0)
+   OPCODE_NEXT( JNC, 0x66,0x0f,0x83,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 83 cw/cd JNC rel16/32 Jump near if NOT carry (CF=0)
+   OPCODE_NEXT( JNC, 0x0f,0x83,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNE, 0x75,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //75 cb JNE rel8 Jump shORt if NOT equal (ZF=0)
+   OPCODE_NEXT( JNE, 0x66,0x0f,0x85,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 85 cw/cd JNE rel16/32 Jump near if NOT equal (ZF=0)
+   OPCODE_NEXT( JNE, 0x0f,0x85,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNG, 0x7e,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7E cb JNG rel8 Jump shORt if NOT greater (ZF=1 OR SF<>OF)
+   OPCODE_NEXT( JNG, 0x66,0x0f,0x8e,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8E cw/cd JNG rel16/32 Jump near if NOT greater (ZF=1 OR SF<>OF)
+   OPCODE_NEXT( JNG, 0x0f,0x8e,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNGE,0x7c,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7C cb JNGE rel8 Jump shORt if NOT greater OR equal (SF<>OF)
+   OPCODE_NEXT( JNGE,0x66,0x0f,0x8c,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8C cw/cd JNGE rel16/32 Jump near if NOT greater OR equal (SF<>OF)
+   OPCODE_NEXT( JNGE,0x0f,0x8c,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNL, 0x7d,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7D cb JNL rel8 Jump shORt if NOT less (SF=OF)
+   OPCODE_NEXT( JNL, 0x66,0x0f,0x8d,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8D cw/cd JNL rel16/32 Jump near if NOT less (SF=OF)
+   OPCODE_NEXT( JNL, 0x0f,0x8d,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNLE,0x7f,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7F cb JNLE rel8 Jump shORt if NOT less OR equal (ZF=0 AND SF=OF)
+   OPCODE_NEXT( JNLE,0x66,0x0f,0x8f,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8F cw/cd JNLE rel16/32 Jump near if NOT less OR equal (ZF=0 AND SF=OF)
+   OPCODE_NEXT( JNLE,0x0f,0x8f,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNO, 0x71,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //71 cb JNO rel8 Jump shORt if NOT overflow (OF=0)
+   OPCODE_NEXT( JNO, 0x66,0x0f,0x81,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 81 cw/cd JNO rel16/32 Jump near if NOT overflow (OF=0)
+   OPCODE_NEXT( JNO, 0x0f,0x81,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNP, 0x7b,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7B cb JNP rel8 Jump shORt if NOT parity (PF=0)
+   OPCODE_NEXT( JNP, 0x66,0x0f,0x8b,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8B cw/cd JNP rel16/32 Jump near if NOT parity (PF=0)
+   OPCODE_NEXT( JNP, 0x0f,0x8b,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNS, 0x79,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //79 cb JNS rel8 Jump shORt if NOT sign (SF=0)
+   OPCODE_NEXT( JNS, 0x66,0x0f,0x89,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 89 cw/cd JNS rel16/32 Jump near if NOT sign (SF=0)
+   OPCODE_NEXT( JNS, 0x0f,0x89,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JNZ, 0x75,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //75 cb JNZ rel8 Jump shORt if NOT zero (ZF=0)
+   OPCODE_NEXT( JNZ, 0x66,0x0f,0x85,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 85 cw/cd JNZ rel16/32 Jump near if NOT zero (ZF=0)
+   OPCODE_NEXT( JNZ, 0x0f,0x85,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JO,  0x70,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //70 cb JO rel8 Jump shORt if overflow (OF=1)
+   OPCODE_NEXT( JO,  0x66,0x0f,0x80,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 80 cw/cd JO rel16/32 Jump near if overflow (OF=1)
+   OPCODE_NEXT( JO,  0x0f,0x80,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JP,  0x7a,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7A cb JP rel8 Jump shORt if parity (PF=1)
+   OPCODE_NEXT( JP,  0x66,0x0f,0x8a,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8A cw/cd JP rel16/32 Jump near if parity (PF=1)
+   OPCODE_NEXT( JP,  0x0f,0x8a,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JPE, 0x7a,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7A cb JPE rel8 Jump shORt if parity even (PF=1)
+   OPCODE_NEXT( JPE, 0x66,0x0f,0x8a,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8A cw/cd JPE rel16/32 Jump near if parity even (PF=1)
+   OPCODE_NEXT( JPE, 0x0f,0x8a,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JPO, 0x7b,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //7B cb JPO rel8 Jump shORt if parity odd (PF=0)
+   OPCODE_NEXT( JPO, 0x66,0x0f,0x8b,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 8B cw/cd JPO rel16/32 Jump near if parity odd (PF=0)
+   OPCODE_NEXT( JPO, 0x0f,0x8b,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JS,  0x78,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //78 cb JS rel8 Jump shORt if sign (SF=1)
+   OPCODE_NEXT( JS,  0x66,0x0f,0x88,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 88 cw/cd JS rel16/32 Jump near if sign (SF=1)
+   OPCODE_NEXT( JS,  0x0f,0x88,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+   OPCODE_FIRST(JZ,  0x74,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //74 cb JZ rel8 Jump shORt if zero (ZF = 1)
+   OPCODE_NEXT( JZ,  0x66,0x0f,0x84,0x00, 0x03, REL16, NON,   NON,   EMPTY)  //0F 84 cw/cd JZ rel16/32 Jump near if 0 (ZF=1)
+   OPCODE_NEXT( JZ,  0x0f,0x84,0x00,0x00, 0x02, REL32, NON,   NON,   EMPTY)
+
+   OPCODE_FIRST(JMP, 0xeb,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //EB cb JMP rel8 Jump shORt, relative, displacement relative to next instruction
+   OPCODE_NEXT( JMP, 0x66,0xe9,0x00,0x00, 0x02, REL16, NON,   NON,   EMPTY)  //E9 cw JMP rel16 Jump near, relative, displacement relative to next instruction
+   OPCODE_NEXT( JMP, 0xe9,0x00,0x00,0x00, 0x01, REL32, NON,   NON,   EMPTY)  //E9 cd JMP rel32 Jump near, relative, displacement relative to next instruction
+   OPCODE_NEXT( JMP, 0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R4)     //FF /4 JMP r/m16 Jump near, absolute indirect, address given in r/m16
+   OPCODE_NEXT( JMP, 0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R4)
+   OPCODE_NEXT( JMP, 0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R4)     //FF /4 JMP r/m32 Jump near, absolute indirect, address given in r/m32
+   OPCODE_NEXT( JMP, 0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R4)
+                                                                             //EA cd JMP ptr16:16 Jump far, absolute, address given in operAND
+                                                                             //EA cp JMP ptr16:32 Jump far, absolute, address given in operAND
+ //OPCODE_NEXT( JMP, 0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R5)     //FF /5 JMP m16:16 Jump far, absolute indirect, address given in m16:16
+ //OPCODE_NEXT( JMP, 0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R5)
+ //OPCODE_NEXT( JMP, 0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R5)     //FF /5 JMP m16:32 Jump far, absolute indirect, address given in m16:32
+ //OPCODE_NEXT( JMP, 0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R5)         
+
+   OPCODE_FIRST(LEA, 0x66,0x8d,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //8D / r LEA r16,m StORe effective address fOR m in register r16
+   OPCODE_NEXT( LEA, 0x66,0x8d,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( LEA, 0x8d,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //8D / r LEA r32,m StORe effective address fOR m in register r32
+   OPCODE_NEXT( LEA, 0x8d,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)      
+ 
+   OPCODE_FIRST(LODSB,0xac,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //AC LODSB Load byte at address DS:(E)SI into AL
+   OPCODE_FIRST(LODSW,0x66,0xad,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //AD LODSW Load wORd at address DS:(E)SI into AX
+   OPCODE_FIRST(LODSD,0xad,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //AD LODSD Load doublewORd at address DS:(E)SI into EAX
+ 
+   OPCODE_FIRST(LOOP,0xe2,0x00,0x00,0x00, 0x01, REL8,  NON,   NON,   EMPTY)  //E2 cb LOOP rel8 Decrement count; jump shORt if count = 0
+   OPCODE_FIRST(LEAVE,0xc9,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //C9 LEAVE Set ESP to EBP, then POP EBP
+   OPCODE_FIRST(LOOPE,0xe1,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //E1 cb LOOPE
+   OPCODE_FIRST(LOOPZ,0xe1,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //E1 cb LOOPZ
+   OPCODE_FIRST(LOOPNE,0xe0,0x00,0x00,0x00,0x01,NON,   NON,   NON,   EMPTY)  //E0 cb LOOPNE
+   OPCODE_FIRST(LOOPNZ,0xe0,0x00,0x00,0x00,0x01,NON,   NON,   NON,   EMPTY)  //E0 cb LOOPNZ
+ 
+   OPCODE_FIRST(MOV, 0x8A,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //   8A / r MOV r8,r/m8 Move r/m8 to r8
+   OPCODE_NEXT( MOV, 0x8A,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( MOV, 0x66,0x8B,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //   8B / r MOV r16,r/m16 Move r/m16 to r16
+   OPCODE_NEXT( MOV, 0x66,0x8B,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( MOV, 0x8B,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //   8B / r MOV r32,r/m32 Move r/m32 to r32
+   OPCODE_NEXT( MOV, 0x8B,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+   OPCODE_NEXT( MOV, 0x88,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //   88 / r MOV r/m8,r8 Move r8 to r/m8
+   OPCODE_NEXT( MOV, 0x88,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( MOV, 0x66,0x89,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //   89 / r MOV r/m16,r16 Move r16 to r/m16
+   OPCODE_NEXT( MOV, 0x66,0x89,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( MOV, 0x89,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //   89 / r MOV r/m32,r32 Move r32 to r/m32
+   OPCODE_NEXT( MOV, 0x89,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( MOV, 0xB0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   PB)     //   B0+ rb MOV r8,imm8 Move imm8 to r8
+   OPCODE_NEXT( MOV, 0x66,0xB8,0x00,0x00, 0x02, REG16, IMM16, NON,   PW)     //   B8+ rw MOV r16,imm16 Move imm16 to r16
+   OPCODE_NEXT( MOV, 0xB8,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   PD)     //   B8+ rd MOV r32,imm32 Move imm32 to r32
+   OPCODE_NEXT( MOV, 0xC6,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R0)     //   C6 / 0 MOV r/m8,imm8 Move imm8 to r/m8
+ //OPCODE_NEXT( MOV, 0xC6,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R0)         
+   OPCODE_NEXT( MOV, 0x66,0xC7,0x00,0x00, 0x02, MEM16, IMM16, NON,   R0)     //   C7 / 0 MOV r/m16,imm16 Move imm16 to r/m16
+ //OPCODE_NEXT( MOV, 0x66,0xC7,0x00,0x00, 0x02, REG16, IMM16, NON,   R0)         
+   OPCODE_NEXT( MOV, 0xC7,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R0)     //   C7 / 0 MOV r/m32,imm32 Move imm32 to r/m32
+ //OPCODE_NEXT( MOV, 0xC7,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R0)         
+
+ //OPCODE_NEXT( MOV, 0xa0,0x00,0x00,0x00, 0x01, AL,    MEM8,  NON,   MOFFS8) //A0 MOV AL, moffs8* Move byte at ( seg:offset) to AL
+ //OPCODE_NEXT( MOV, 0x66,0xa1,0x00,0x00, 0x02, AX,    MEM16, NON,   MOFFS16)//A1 MOV AX, moffs16* Move wORd at ( seg:offset) to AX
+ //OPCODE_NEXT( MOV, 0xa1,0x00,0x00,0x00, 0x01, EAX,   MEM32, NON,   MOFFS32)//A1 MOV EAX, moffs32* Move doublewORd at ( seg:offset) to EAX
+ //OPCODE_NEXT( MOV, 0xa2,0x00,0x00,0x00, 0x01, MEM8,  AL,    NON,   MOFFS8) //A2 MOV moffs8*,AL Move AL to ( seg:offset)
+ //OPCODE_NEXT( MOV, 0x66,0xa3,0x00,0x00, 0x02, MEM16, AX,    NON,   MOFFS16)//A3 MOV moffs16*,AX Move AX to ( seg:offset)
+ //OPCODE_NEXT( MOV, 0xa3,0x00,0x00,0x00, 0x01, MEM32, EAX,   NON,   MOFFS32)//A3 MOV moffs32*,EAX Move EAX to ( seg:offset)
+
+   OPCODE_FIRST(MOVSB,0xa4,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //A4 MOVSB Move byte at address DS:(E)SI to address ES:(E)DI
+   OPCODE_FIRST(MOVSW,0x66,0xa5,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //A5 MOVSW Move wORd at address DS:(E)SI to address ES:(E)DI
+   OPCODE_FIRST(MOVSD,0xa5,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //A5 MOVSD Move doublewORd at address DS:(E)SI to address ES:(E)DI   
+
+ //OPCODE_FIRST(XCHG,0x66,0x90,0x00,0x00, 0x02, AX,    REG16, NON,   PW)     //90+ rw XCHG AX, r16 Exchange r16 with AX
+ //OPCODE_NEXT( XCHG,0x66,0x90,0x00,0x00, 0x02, REG16, AX,    NON,   PW)     //90+ rw XCHG r16,AX Exchange AX with r16
+ //OPCODE_NEXT( XCHG,0x90,0x00,0x00,0x00, 0x01, EAX,   REG32, NON,   PD)     //90+ rd XCHG EAX, r32 Exchange r32 with EAX
+ //OPCODE_NEXT( XCHG,0x90,0x00,0x00,0x00, 0x01, REG32, EAX,   NON,   PD)     //90+ rd XCHG r32,EAX Exchange EAX with r32
+   OPCODE_FIRST(XCHG,0x86,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //86 / r XCHG r/m8,r8 Exchange r8 (byte register) with byte from r/m8
+   OPCODE_NEXT( XCHG,0x86,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( XCHG,0x86,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //86 / r XCHG r8,r/m8 Exchange byte from r/m8 with r8 (byte register)
+   OPCODE_NEXT( XCHG,0x86,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)               
+   OPCODE_NEXT( XCHG,0x66,0x87,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //87 / r XCHG r/m16,r16 Exchange r16 with wORd from r/m16
+   OPCODE_NEXT( XCHG,0x66,0x87,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( XCHG,0x66,0x87,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //87 / r XCHG r16,r/m16 Exchange wORd from r/m16 with r16
+   OPCODE_NEXT( XCHG,0x66,0x87,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( XCHG,0x87,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //87 / r XCHG r/m32,r32 Exchange r32 with doublewORd from r/m32
+   OPCODE_NEXT( XCHG,0x87,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( XCHG,0x87,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //87 / r XCHG r32,r/m32 Exchange doublewORd from r/m32 with r32
+   OPCODE_NEXT( XCHG,0x87,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+
+   OPCODE_FIRST(MOVSX,0x66,0x0f,0xbe,0x00,0x03, REG16, REG8,  NON,   R_RM)   //0F BE / r MOVSX r16,r/m8 Move byte to wORd with sign-extension
+   OPCODE_NEXT( MOVSX,0x66,0x0f,0xbe,0x00,0x03, REG16, MEM8,  NON,   R_RM)
+   OPCODE_NEXT( MOVSX,0x0f,0xbe,0x00,0x00,0x02, REG32, REG8,  NON,   R_RM)   //0F BE / r MOVSX r32,r/m8 Move byte to doublewORd, sign-extension
+   OPCODE_NEXT( MOVSX,0x0f,0xbe,0x00,0x00,0x02, REG32, MEM8,  NON,   R_RM)
+   OPCODE_NEXT( MOVSX,0x0f,0xbf,0x00,0x00,0x02, REG32, REG16, NON,   R_RM)   //0F BF / r MOVSX r32,r/m16 Move wORd to doublewORd, sign-extension
+   OPCODE_NEXT( MOVSX,0x0f,0xbf,0x00,0x00,0x02, REG32, MEM16, NON,   R_RM)
+
+   OPCODE_FIRST(MOVZX,0x66,0x0f,0xb6,0x00,0x03, REG16, REG8,  NON,   R_RM)   //0F B6 / r MOVZX r16,r/m8 Move byte to wORd with zero-extension
+   OPCODE_NEXT( MOVZX,0x66,0x0f,0xb6,0x00,0x03, REG16, MEM8,  NON,   R_RM)
+   OPCODE_NEXT( MOVZX,0x0f,0xb6,0x00,0x00,0x02, REG32, REG8,  NON,   R_RM)   //0F B6 / r MOVZX r32,r/m8 Move byte to doublewORd, zero-extension
+   OPCODE_NEXT( MOVZX,0x0f,0xb6,0x00,0x00,0x02, REG32, MEM8,  NON,   R_RM)
+   OPCODE_NEXT( MOVZX,0x0f,0xb7,0x00,0x00,0x02, REG32, REG16, NON,   R_RM)   //0F B7 / r MOVZX r32,r/m16 Move wORd to doublewORd, zero-extension
+   OPCODE_NEXT( MOVZX,0x0f,0xb7,0x00,0x00,0x02, REG32, MEM16, NON,   R_RM)
+      
+   OPCODE_FIRST(MUL, 0xf6,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R4)     //F6 /4 MUL r/m8 Unsigned MULtiply (AX ¬ AL * r/m8)
+   OPCODE_NEXT( MUL, 0xf6,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R4)    
+   OPCODE_NEXT( MUL, 0x66,0xf7,0x00,0x00, 0x02, REG16, NON,   NON,   R4)     //F7 /4 MUL r/m16 Unsigned MULtiply (DX:AX ¬ AX * r/m16)
+   OPCODE_NEXT( MUL, 0x66,0xf7,0x00,0x00, 0x02, MEM16, NON,   NON,   R4)         
+   OPCODE_NEXT( MUL, 0xf7,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R4)     //F7 /4 MUL r/m32 Unsigned MULtiply (EDX:EAX ¬ EAX * r/m32)
+   OPCODE_NEXT( MUL, 0xf7,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R4)   
+
+   OPCODE_FIRST(NEG, 0xf6,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R3)     //F6 /3 NEG r/m8 Two's complement NEGate r/m8
+   OPCODE_NEXT( NEG, 0xf6,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R3)
+   OPCODE_NEXT( NEG, 0x66,0xf7,0x00,0x00, 0x02, REG16, NON,   NON,   R3)     //F7 /3 NEG r/m16 Two's complement NEGate r/m16
+   OPCODE_NEXT( NEG, 0x66,0xf7,0x00,0x00, 0x02, MEM16, NON,   NON,   R3)
+   OPCODE_NEXT( NEG, 0xf7,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R3)     //F7 /3 NEG r/m32 Two's complement NEGate r/m32    
+   OPCODE_NEXT( NEG, 0xf7,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R3)
+
+   OPCODE_FIRST(NOP, 0x90,0x00,0x00,0x00, 0x01, NON,   NON,   NON,   EMPTY)  //90 NOP No operation
+
+   OPCODE_FIRST(NOT, 0xf6,0x00,0x00,0x00, 0x01, REG8,  NON,   NON,   R2)     //F6 /2 NOT r/m8 Reverse each bit of r/m8
+   OPCODE_NEXT( NOT, 0xf6,0x00,0x00,0x00, 0x01, MEM8,  NON,   NON,   R2)
+   OPCODE_NEXT( NOT, 0x66,0xf7,0x00,0x00, 0x02, REG16, NON,   NON,   R2)     //F7 /2 NOT r/m16 Reverse each bit of r/m16
+   OPCODE_NEXT( NOT, 0x66,0xf7,0x00,0x00, 0x02, MEM16, NON,   NON,   R2)
+   OPCODE_NEXT( NOT, 0xf7,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R2)     //F7 /2 NOT r/m32 Reverse each bit of r/m32
+   OPCODE_NEXT( NOT, 0xf7,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R2)
+
+   OPCODE_FIRST(OR,  0x0c,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //0C ib OR AL, imm8 AL OR imm8
+   OPCODE_NEXT( OR,  0x66,0x0d,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //0D iw OR AX, imm16 AX OR imm16
+   OPCODE_NEXT( OR,  0x0d,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //0D id OR EAX, imm32 EAX OR imm32
+   OPCODE_NEXT( OR,  0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R1)     //80 /1 ib OR r/m8,imm8 r/m8 OR imm8
+   OPCODE_NEXT( OR,  0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R1)
+   OPCODE_NEXT( OR,  0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R1)     //81 /1 iw OR r/m16,imm16 r/m16 OR imm16
+   OPCODE_NEXT( OR,  0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R1)
+   OPCODE_NEXT( OR,  0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R1)     //81 /1 id OR r/m32,imm32 r/m32 OR imm32
+   OPCODE_NEXT( OR,  0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R1)
+   OPCODE_NEXT( OR,  0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R1)     //83 /1 ib OR r/m16,imm8 r/m16 OR imm8 (sign-extended)
+   OPCODE_NEXT( OR,  0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R1)
+   OPCODE_NEXT( OR,  0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R1)     //83 /1 ib OR r/m32,imm8 r/m32 OR imm8 (sign-extended)
+   OPCODE_NEXT( OR,  0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R1)
+   OPCODE_NEXT( OR,  0x08,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //08 / r OR r/m8,r8 r/m8 OR r8
+   OPCODE_NEXT( OR,  0x08,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( OR,  0x66,0x09,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //09 / r OR r/m16,r16 r/m16 OR r16
+   OPCODE_NEXT( OR,  0x66,0x09,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)    
+   OPCODE_NEXT( OR,  0x09,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //09 / r OR r/m32,r32 r/m32 OR r32
+   OPCODE_NEXT( OR,  0x09,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( OR,  0x0a,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //0A / r OR r8,r/m8 r8 OR r/m8
+   OPCODE_NEXT( OR,  0x0a,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( OR,  0x66,0x0a,0x00,0x00, 0x01, REG16, REG16, NON,   R_RM)   //0B / r OR r16,r/m16 r16 OR r/m16
+   OPCODE_NEXT( OR,  0x66,0x0a,0x00,0x00, 0x01, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( OR,  0x0b,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //0B / r OR r32,r/m32 r32 OR r/m32
+   OPCODE_NEXT( OR,  0x0b,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+
+   OPCODE_FIRST(POP, 0x66,0x8f,0x00,0x00, 0x02, MEM16, NON,   NON,   R0)     //8F /0 POP m16 Pop top of stack into m16; INCrement stack pointer
+   OPCODE_NEXT( POP, 0x8f,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R0)     //8F /0 POP m32 Pop top of stack into m32; INCrement stack pointer
+   OPCODE_NEXT( POP, 0x66,0x58,0x00,0x00, 0x02, REG16, NON,   NON,   PW)     //58+ rw POP r16 Pop top of stack into r16; INCrement stack pointer
+   OPCODE_NEXT( POP, 0x58,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   PD)     //58+ rd POP r32 Pop top of stack into r32; INCrement stack pointer
+
+   OPCODE_FIRST(POPA,0x66,0x61,0x00,0x00, 0x02, NON,   NON,   NON,   EMPTY)  //61 POPA Pop DI, SI, BP, BX, DX, CX, AND AX
+   OPCODE_FIRST(POPAD,0x61,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //61 POPAD Pop EDI, ESI, EBP, EBX, EDX, ECX, AND EAX
+   OPCODE_FIRST(POPF,0x66,0x9d,0x00,0x00, 0x02, NON,   NON,   NON,   EMPTY)  //9D POPF Pop top of stack into lower 16 bits of EFLAGS
+   OPCODE_FIRST(POPFD,0x61,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //9D POPFD Pop top of stack into EFLAGS
+
+   OPCODE_FIRST(PUSH,0x66,0xff,0x00,0x00, 0x02, MEM16, NON,   NON,   R6)     //FF /6 PUSH r/m16 Push r/m16
+ //OPCODE_NEXT( PUSH,0x66,0xff,0x00,0x00, 0x02, REG16, NON,   NON,   R6) 
+   OPCODE_NEXT( PUSH,0xff,0x00,0x00,0x00, 0x01, MEM32, NON,   NON,   R6)     //FF /6 PUSH r/m32 Push r/m32
+ //OPCODE_NEXT( PUSH,0xff,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   R6)
+   OPCODE_NEXT( PUSH,0x66,0x50,0x00,0x00, 0x02, REG16, NON,   NON,   PW)     //50+ rw PUSH r16 Push r16
+   OPCODE_NEXT( PUSH,0x50,0x00,0x00,0x00, 0x01, REG32, NON,   NON,   PD)     //50+ rd PUSH r32 Push r32
+   OPCODE_NEXT( PUSH,0x6a,0x00,0x00,0x00, 0x01, IMM8,  NON,   NON,   EMPTY)  //6A PUSH imm8 Push imm8
+   OPCODE_NEXT( PUSH,0x66,0x68,0x00,0x00, 0x02, IMM16, NON,   NON,   EMPTY)  //68 PUSH imm16 Push imm16
+   OPCODE_NEXT( PUSH,0x68,0x00,0x00,0x00, 0x01, IMM32, NON,   NON,   EMPTY)  //68 PUSH imm32 Push imm32
+   OPCODE_FIRST(PUSHA,0x66,0x60,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //60 PUSHA Push AX, CX, DX, BX, ORiginal SP, BP, SI, AND DI
+   OPCODE_FIRST(PUSHAD,0x60,0x00,0x00,0x00,0x01,NON,   NON,   NON,   EMPTY)  //60 PUSHAD Push EAX, ECX, EDX, EBX, ORiginal ESP, EBP, ESI, AND EDI
+   OPCODE_FIRST(PUSHF,0x66,0x9c,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //9C PUSHF Push lower 16 bits of EFLAGS
+   OPCODE_FIRST(PUSHFD,0x9c,0x00,0x00,0x00,0x01,NON,   NON,   NON,   EMPTY)  //9C PUSHFD Push EFLAGS
+
+   OPCODE_FIRST(RCL, 0xd0,0x00,0x00,0x00, 0x01, REG8,  IMM1,  NON,   R2)     //D0 /2 RCL r/m8,1 Rotate 9 bits (CF, r/m8) left once
+   OPCODE_NEXT( RCL, 0xd0,0x00,0x00,0x00, 0x01, MEM8,  IMM1,  NON,   R2)
+   OPCODE_NEXT( RCL, 0xd2,0x00,0x00,0x00, 0x01, REG8,  CL,    NON,   R2)     //D2 /2 RCL r/m8,CL Rotate 9 bits (CF, r/m8) left CL times
+   OPCODE_NEXT( RCL, 0xd2,0x00,0x00,0x00, 0x01, MEM8,  CL,    NON,   R2)
+   OPCODE_NEXT( RCL, 0xc0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R2)     //C0 /2 ib RCL r/m8,imm8 Rotate 9 bits (CF, r/m8) left imm8 times
+   OPCODE_NEXT( RCL, 0xc0,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R2)
+   OPCODE_NEXT( RCL, 0x66,0xd1,0x00,0x00, 0x02, REG16, IMM1,  NON,   R2)     //D1 /2 RCL r/m16,1 Rotate 17 bits (CF, r/m16) left once
+   OPCODE_NEXT( RCL, 0x66,0xd1,0x00,0x00, 0x02, MEM16, IMM1,  NON,   R2)
+   OPCODE_NEXT( RCL, 0x66,0xd3,0x00,0x00, 0x02, REG16, CL,    NON,   R2)     //D3 /2 RCL r/m16,CL Rotate 17 bits (CF, r/m16) left CL times
+   OPCODE_NEXT( RCL, 0x66,0xd3,0x00,0x00, 0x02, MEM16, CL,    NON,   R2)
+   OPCODE_NEXT( RCL, 0x66,0xc1,0x00,0x00, 0x02, REG16, IMM8,  NON,   R2)     //C1 /2 ib RCL r/m16,imm8 Rotate 17 bits (CF, r/m16) left imm8 times
+   OPCODE_NEXT( RCL, 0x66,0xc1,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R2)
+   OPCODE_NEXT( RCL, 0xd1,0x00,0x00,0x00, 0x01, REG32, IMM1,  NON,   R2)     //D1 /2 RCL r/m32,1 Rotate 33 bits (CF, r/m32) left once
+   OPCODE_NEXT( RCL, 0xd1,0x00,0x00,0x00, 0x01, MEM32, IMM1,  NON,   R2)
+   OPCODE_NEXT( RCL, 0xd3,0x00,0x00,0x00, 0x01, REG32, CL,    NON,   R2)     //D3 /2 RCL r/m32,CL Rotate 33 bits (CF, r/m32) left CL times
+   OPCODE_NEXT( RCL, 0xd3,0x00,0x00,0x00, 0x01, MEM32, CL,    NON,   R2)
+   OPCODE_NEXT( RCL, 0xc1,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R2)     //C1 /2 ib RCL r/m32,imm8 Rotate 33 bits (CF, r/m32) left imm8 times
+   OPCODE_NEXT( RCL, 0xc1,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R2)
+
+   OPCODE_FIRST(RCR, 0xd0,0x00,0x00,0x00, 0x01, REG8,  IMM1,  NON,   R3)     //D0 /3 RCR r/m8,1 Rotate 9 bits (CF, r/m8) right once
+   OPCODE_NEXT( RCR, 0xd0,0x00,0x00,0x00, 0x01, MEM8,  IMM1,  NON,   R3)
+   OPCODE_NEXT( RCR, 0xd2,0x00,0x00,0x00, 0x01, REG8,  CL,    NON,   R3)     //D2 /3 RCR r/m8,CL Rotate 9 bits (CF, r/m8) right CL times
+   OPCODE_NEXT( RCR, 0xd2,0x00,0x00,0x00, 0x01, MEM8,  CL,    NON,   R3)
+   OPCODE_NEXT( RCR, 0xc0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R3)     //C0 /3 ib RCR r/m8,imm8 Rotate 9 bits (CF, r/m8) right imm8 times
+   OPCODE_NEXT( RCR, 0xc0,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R3)
+   OPCODE_NEXT( RCR, 0x66,0xd1,0x00,0x00, 0x02, REG16, IMM1,  NON,   R3)     //D1 /3 RCR r/m16,1 Rotate 17 bits (CF, r/m16) right once
+   OPCODE_NEXT( RCR, 0x66,0xd1,0x00,0x00, 0x02, MEM16, IMM1,  NON,   R3)
+   OPCODE_NEXT( RCR, 0x66,0xd3,0x00,0x00, 0x02, REG16, CL,    NON,   R3)     //D3 /3 RCR r/m16,CL Rotate 17 bits (CF, r/m16) right CL times
+   OPCODE_NEXT( RCR, 0x66,0xd3,0x00,0x00, 0x02, MEM16, CL,    NON,   R3)
+   OPCODE_NEXT( RCR, 0x66,0xc1,0x00,0x00, 0x02, REG16, IMM8,  NON,   R3)     //C1 /3 ib RCR r/m16,imm8 Rotate 17 bits (CF, r/m16) right imm8 times
+   OPCODE_NEXT( RCR, 0x66,0xc1,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R3)
+   OPCODE_NEXT( RCR, 0xd1,0x00,0x00,0x00, 0x01, REG32, IMM1,  NON,   R3)     //D1 /3 RCR r/m32,1 Rotate 33 bits (CF, r/m32) right once
+   OPCODE_NEXT( RCR, 0xd1,0x00,0x00,0x00, 0x01, MEM32, IMM1,  NON,   R3)
+   OPCODE_NEXT( RCR, 0xd3,0x00,0x00,0x00, 0x01, REG32, CL,    NON,   R3)     //D3 /3 RCR r/m32,CL Rotate 33 bits (CF, r/m32) right CL times
+   OPCODE_NEXT( RCR, 0xd3,0x00,0x00,0x00, 0x01, MEM32, CL,    NON,   R3)
+   OPCODE_NEXT( RCR, 0xc1,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R3)     //C1 /3 ib RCR r/m32,imm8 Rotate 33 bits (CF, r/m32) right imm8 times
+   OPCODE_NEXT( RCR, 0xc1,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R3)
+
+   OPCODE_FIRST(ROL, 0xd0,0x00,0x00,0x00, 0x01, REG8,  IMM1,  NON,   R0)     //D0 /0 ROL r/m8,1 Rotate 8 bits r/m8 left once
+   OPCODE_NEXT( ROL, 0xd0,0x00,0x00,0x00, 0x01, MEM8,  IMM1,  NON,   R0)
+   OPCODE_NEXT( ROL, 0xd2,0x00,0x00,0x00, 0x01, REG8,  CL,    NON,   R0)     //D2 /0 ROL r/m8,CL Rotate 8 bits r/m8 left CL times
+   OPCODE_NEXT( ROL, 0xd2,0x00,0x00,0x00, 0x01, MEM8,  CL,    NON,   R0)
+   OPCODE_NEXT( ROL, 0xc0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R0)     //C0 /0 ib ROL r/m8,imm8 Rotate 8 bits r/m8 left imm8 times
+   OPCODE_NEXT( ROL, 0xc0,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R0)
+   OPCODE_NEXT( ROL, 0x66,0xd1,0x00,0x00, 0x02, REG16, IMM1,  NON,   R0)     //D1 /0 ROL r/m16,1 Rotate 16 bits r/m16 left once
+   OPCODE_NEXT( ROL, 0x66,0xd1,0x00,0x00, 0x02, MEM16, IMM1,  NON,   R0)
+   OPCODE_NEXT( ROL, 0x66,0xd3,0x00,0x00, 0x02, REG16, CL,    NON,   R0)     //D3 /0 ROL r/m16,CL Rotate 16 bits r/m16 left CL times
+   OPCODE_NEXT( ROL, 0x66,0xd3,0x00,0x00, 0x02, MEM16, CL,    NON,   R0)
+   OPCODE_NEXT( ROL, 0x66,0xc1,0x00,0x00, 0x02, REG16, IMM8,  NON,   R0)     //C1 /0 ib ROL r/m16,imm8 Rotate 16 bits r/m16 left imm8 times
+   OPCODE_NEXT( ROL, 0x66,0xc1,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R0)
+   OPCODE_NEXT( ROL, 0xd1,0x00,0x00,0x00, 0x01, REG32, IMM1,  NON,   R0)     //D1 /0 ROL r/m32,1 Rotate 32 bits r/m32 left once
+   OPCODE_NEXT( ROL, 0xd1,0x00,0x00,0x00, 0x01, MEM32, IMM1,  NON,   R0)
+   OPCODE_NEXT( ROL, 0xd3,0x00,0x00,0x00, 0x01, REG32, CL,    NON,   R0)     //D3 /0 ROL r/m32,CL Rotate 32 bits r/m32 left CL times
+   OPCODE_NEXT( ROL, 0xd3,0x00,0x00,0x00, 0x01, MEM32, CL,    NON,   R0)
+   OPCODE_NEXT( ROL, 0xc1,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R0)     //C1 /0 ib ROL r/m32,imm8 Rotate 32 bits r/m32 left imm8 times    
+   OPCODE_NEXT( ROL, 0xc1,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R0)    
+
+   OPCODE_FIRST(ROR, 0xd0,0x00,0x00,0x00, 0x01, REG8,  IMM1,  NON,   R1)     //D0 /1 ROR r/m8,1 Rotate 8 bits r/m8 right once
+   OPCODE_NEXT( ROR, 0xd0,0x00,0x00,0x00, 0x01, MEM8,  IMM1,  NON,   R1)
+   OPCODE_NEXT( ROR, 0xd2,0x00,0x00,0x00, 0x01, REG8,  CL,    NON,   R1)     //D2 /1 ROR r/m8,CL Rotate 8 bits r/m8 right CL times
+   OPCODE_NEXT( ROR, 0xd2,0x00,0x00,0x00, 0x01, MEM8,  CL,    NON,   R1)
+   OPCODE_NEXT( ROR, 0xc0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R1)     //C0 /1 ib ROR r/m8,imm8 Rotate 8 bits r/m16 right imm8 times
+   OPCODE_NEXT( ROR, 0xc0,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R1)
+   OPCODE_NEXT( ROR, 0x66,0xd1,0x00,0x00, 0x02, REG16, IMM1,  NON,   R1)     //D1 /1 ROR r/m16,1 Rotate 16 bits r/m16 right once
+   OPCODE_NEXT( ROR, 0x66,0xd1,0x00,0x00, 0x02, MEM16, IMM1,  NON,   R1)
+   OPCODE_NEXT( ROR, 0x66,0xd3,0x00,0x00, 0x02, REG16, CL,    NON,   R1)     //D3 /1 ROR r/m16,CL Rotate 16 bits r/m16 right CL times
+   OPCODE_NEXT( ROR, 0x66,0xd3,0x00,0x00, 0x02, MEM16, CL,    NON,   R1)
+   OPCODE_NEXT( ROR, 0x66,0xc1,0x00,0x00, 0x02, REG16, IMM8,  NON,   R1)     //C1 /1 ib ROR r/m16,imm8 Rotate 16 bits r/m16 right imm8 times
+   OPCODE_NEXT( ROR, 0x66,0xc1,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R1)
+   OPCODE_NEXT( ROR, 0xd1,0x00,0x00,0x00, 0x01, REG32, IMM1,  NON,   R1)     //D1 /1 ROR r/m32,1 Rotate 32 bits r/m32 right once
+   OPCODE_NEXT( ROR, 0xd1,0x00,0x00,0x00, 0x01, MEM32, IMM1,  NON,   R1)
+   OPCODE_NEXT( ROR, 0xd3,0x00,0x00,0x00, 0x01, REG32, CL,    NON,   R1)     //D3 /1 ROR r/m32,CL Rotate 32 bits r/m32 right CL times
+   OPCODE_NEXT( ROR, 0xd3,0x00,0x00,0x00, 0x01, MEM32, CL,    NON,   R1)
+   OPCODE_NEXT( ROR, 0xc1,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R1)     //C1 /1 ib ROR r/m32,imm8 Rotate 32 bits r/m32 right imm8 times    
+   OPCODE_NEXT( ROR, 0xc1,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R1)    
+
+   OPCODE_FIRST(SHR, 0xd0,0x00,0x00,0x00, 0x01, REG8,  IMM1,  NON,   R5)     //D0 /5 SHR r/m8,1 Unsigned DIVide r/m8 by 2, once
+   OPCODE_NEXT( SHR, 0xd0,0x00,0x00,0x00, 0x01, MEM8,  IMM1,  NON,   R5)
+   OPCODE_NEXT( SHR, 0xd2,0x00,0x00,0x00, 0x01, REG8,  CL,    NON,   R5)     //D0 /5 SHR r/m8,1 Unsigned DIVide r/m8 by 2, once
+   OPCODE_NEXT( SHR, 0xd2,0x00,0x00,0x00, 0x01, MEM8,  CL,    NON,   R5)
+   OPCODE_NEXT( SHR, 0xc0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R5)     //C0 /5 ib SHR r/m8,imm8 Unsigned DIVide r/m8 by 2, imm8 times
+   OPCODE_NEXT( SHR, 0xc0,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R5)
+   OPCODE_NEXT( SHR, 0x66,0xd1,0x00,0x00, 0x02, REG16, IMM1,  NON,   R5)     //D1 /5 SHR r/m16,1 Unsigned DIVide r/m16 by 2, once
+   OPCODE_NEXT( SHR, 0x66,0xd1,0x00,0x00, 0x02, MEM16, IMM1,  NON,   R5)
+   OPCODE_NEXT( SHR, 0x66,0xd3,0x00,0x00, 0x02, REG16, CL,    NON,   R5)     //D3 /5 SHR r/m16,CL Unsigned DIVide r/m16 by 2, CL times
+   OPCODE_NEXT( SHR, 0x66,0xd3,0x00,0x00, 0x02, MEM16, CL,    NON,   R5)
+   OPCODE_NEXT( SHR, 0x66,0xc1,0x00,0x00, 0x02, REG16, IMM8,  NON,   R5)     //C1 /5 ib SHR r/m16,imm8 Unsigned DIVide r/m16 by 2, imm8 times
+   OPCODE_NEXT( SHR, 0x66,0xc1,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R5)
+   OPCODE_NEXT( SHR, 0xd1,0x00,0x00,0x00, 0x01, REG32, IMM1,  NON,   R5)     //D1 /5 SHR r/m32,1 Unsigned DIVide r/m32 by 2, once
+   OPCODE_NEXT( SHR, 0xd1,0x00,0x00,0x00, 0x01, MEM32, IMM1,  NON,   R5)
+   OPCODE_NEXT( SHR, 0xd3,0x00,0x00,0x00, 0x01, REG32, CL,    NON,   R5)     //D3 /5 SHR r/m32,CL Unsigned DIVide r/m32 by 2, CL times
+   OPCODE_NEXT( SHR, 0xd3,0x00,0x00,0x00, 0x01, MEM32, CL,    NON,   R5)
+   OPCODE_NEXT( SHR, 0xc1,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R5)     //C1 /5 ib SHR r/m32,imm8 Unsigned DIVide r/m32 by 2, imm8 times
+   OPCODE_NEXT( SHR, 0xc1,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R5)    
+
+   OPCODE_FIRST(SHL, 0xd0,0x00,0x00,0x00, 0x01, REG8,  IMM1,  NON,   R4)     //D0 /4 SHL r/m8,1 Multiply r/m8 by 2, once
+   OPCODE_NEXT( SHL, 0xd0,0x00,0x00,0x00, 0x01, MEM8,  IMM1,  NON,   R4)
+   OPCODE_NEXT( SHL, 0xd2,0x00,0x00,0x00, 0x01, REG8,  CL,    NON,   R4)     //D2 /4 SHL r/m8,CL Multiply r/m8 by 2, CL times
+   OPCODE_NEXT( SHL, 0xd2,0x00,0x00,0x00, 0x01, MEM8,  CL,    NON,   R4)
+   OPCODE_NEXT( SHL, 0xc0,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R4)     //C0 /4 ib SHL r/m8,imm8 Multiply r/m8 by 2, imm8 times
+   OPCODE_NEXT( SHL, 0xc0,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R4)
+   OPCODE_NEXT( SHL, 0x66,0xd1,0x00,0x00, 0x02, REG16, IMM1,  NON,   R4)     //D1 /4 SHL r/m16,1 Multiply r/m16 by 2, once
+   OPCODE_NEXT( SHL, 0x66,0xd1,0x00,0x00, 0x02, MEM16, IMM1,  NON,   R4)
+   OPCODE_NEXT( SHL, 0x66,0xd3,0x00,0x00, 0x02, REG16, CL,    NON,   R4)     //D3 /4 SHL r/m16,CL Multiply r/m16 by 2, CL times
+   OPCODE_NEXT( SHL, 0x66,0xd3,0x00,0x00, 0x02, MEM16, CL,    NON,   R4)
+   OPCODE_NEXT( SHL, 0x66,0xc1,0x00,0x00, 0x02, REG16, IMM8,  NON,   R4)     //C1 /4 ib SHL r/m16,imm8 Multiply r/m16 by 2, imm8 times
+   OPCODE_NEXT( SHL, 0x66,0xc1,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R4)
+   OPCODE_NEXT( SHL, 0xd1,0x00,0x00,0x00, 0x01, REG32, IMM1,  NON,   R4)     //D1 /4 SHL r/m32,1 Multiply r/m32 by 2, once
+   OPCODE_NEXT( SHL, 0xd1,0x00,0x00,0x00, 0x01, MEM32, IMM1,  NON,   R4)
+   OPCODE_NEXT( SHL, 0xd3,0x00,0x00,0x00, 0x01, REG32, CL,    NON,   R4)     //D3 /4 SHL r/m32,CL Multiply r/m32 by 2, CL times
+   OPCODE_NEXT( SHL, 0xd3,0x00,0x00,0x00, 0x01, MEM32, CL,    NON,   R4)
+   OPCODE_NEXT( SHL, 0xc1,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R4)     //C1 /4 ib SHL r/m32,imm8 Multiply r/m32 by 2, imm8 times
+   OPCODE_NEXT( SHL, 0xc1,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R4)    
+
+   OPCODE_FIRST(STOSB,0xaa,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //AA STOSB StORe AL at address ES:(E)DI
+   OPCODE_FIRST(STOSW,0x66,0xab,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //AB STOSW StORe AX at address ES:(E)DI
+   OPCODE_FIRST(STOSD,0xab,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //AB STOSD StORe EAX at address ES:(E)DI    
+   OPCODE_FIRST(SCASB,0xae,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //AE SCAS m8 Compare AL with byte at ES:(E)DI AND set status flags
+   OPCODE_FIRST(SCASW,0x66,0xaf,0x00,0x00,0x02, NON,   NON,   NON,   EMPTY)  //AF SCAS m16 Compare AX with wORd at ES:(E)DI AND set status flags
+   OPCODE_FIRST(SCASD,0xaf,0x00,0x00,0x00,0x01, NON,   NON,   NON,   EMPTY)  //AF SCAS m32 Compare EAX with doublewORd at ES(E)DI AND set status flags
+
+   OPCODE_FIRST(SUB, 0x2c,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //2C ib SUB AL, imm8 Subtract imm8 from AL
+   OPCODE_NEXT( SUB, 0x66,0x2d,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //2D iw SUB AX, imm16 Subtract imm16 from AX
+   OPCODE_NEXT( SUB, 0x2d,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //2D id SUB EAX, imm32 Subtract imm32 from EAX
+   OPCODE_NEXT( SUB, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R5)     //80 /5 ib SUB r/m8,imm8 Subtract imm8 from r/m8
+   OPCODE_NEXT( SUB, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R5)
+   OPCODE_NEXT( SUB, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R5)     //81 /5 iw SUB r/m16,imm16 Subtract imm16 from r/m16
+   OPCODE_NEXT( SUB, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R5)
+   OPCODE_NEXT( SUB, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R5)     //81 /5 id SUB r/m32,imm32 Subtract imm32 from r/m32
+   OPCODE_NEXT( SUB, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R5)
+   OPCODE_NEXT( SUB, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R5)     //83 /5 ib SUB r/m16,imm8 Subtract sign-extended imm8 from r/m16
+   OPCODE_NEXT( SUB, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R5)
+   OPCODE_NEXT( SUB, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R5)     //83 /5 ib SUB r/m32,imm8 Subtract sign-extended imm8 from r/m32
+   OPCODE_NEXT( SUB, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R5)
+   OPCODE_NEXT( SUB, 0x28,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //28 / r SUB r/m8,r8 Subtract r8 from r/m8
+   OPCODE_NEXT( SUB, 0x28,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( SUB, 0x66,0x29,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //29 / r SUB r/m16,r16 Subtract r16 from r/m16
+   OPCODE_NEXT( SUB, 0x66,0x29,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( SUB, 0x29,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //29 / r SUB r/m32,r32 Subtract r32 from r/m32
+   OPCODE_NEXT( SUB, 0x29,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( SUB, 0x2a,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //2A / r SUB r8,r/m8 Subtract r/m8 from r8
+   OPCODE_NEXT( SUB, 0x2a,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( SUB, 0x66,0x2b,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //2B / r SUB r16,r/m16 Subtract r/m16 from r16
+   OPCODE_NEXT( SUB, 0x66,0x2b,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( SUB, 0x2b,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //2B / r SUB r32,r/m32 Subtract r/m32 from r32
+   OPCODE_NEXT( SUB, 0x2b,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+
+   OPCODE_FIRST(SBB, 0x1c,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //1C ib SBB AL, imm8 Subtract with bORrow imm8 from AL
+   OPCODE_NEXT( SBB, 0x66,0x1d,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //1D iw SBB AX, imm16 Subtract with bORrow imm16 from AX
+   OPCODE_NEXT( SBB, 0x1d,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //1D id SBB EAX, imm32 Subtract with bORrow imm32 from EAX
+   OPCODE_NEXT( SBB, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R3)     //80 /3 ib SBB r/m8,imm8 Subtract with bORrow imm8 from r/m8
+   OPCODE_NEXT( SBB, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R3)
+   OPCODE_NEXT( SBB, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R3)     //81 /3 iw SBB r/m16,imm16 Subtract with bORrow imm16 from r/m16
+   OPCODE_NEXT( SBB, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R3)
+   OPCODE_NEXT( SBB, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R3)     //81 /3 id SBB r/m32,imm32 Subtract with bORrow imm32 from r/m32
+   OPCODE_NEXT( SBB, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R3)
+   OPCODE_NEXT( SBB, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R3)     //83 /3 ib SBB r/m16,imm8 Subtract with bORrow sign-extended imm8 from r/m16
+   OPCODE_NEXT( SBB, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R3)
+   OPCODE_NEXT( SBB, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R3)     //83 /3 ib SBB r/m32,imm8 Subtract with bORrow sign-extended imm8 from r/m32
+   OPCODE_NEXT( SBB, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R3)
+   OPCODE_NEXT( SBB, 0x18,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //18 / r SBB r/m8,r8 Subtract with bORrow r8 from r/m8
+   OPCODE_NEXT( SBB, 0x18,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( SBB, 0x66,0x19,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //19 / r SBB r/m16,r16 Subtract with bORrow r16 from r/m16
+   OPCODE_NEXT( SBB, 0x66,0x19,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( SBB, 0x19,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //19 / r SBB r/m32,r32 Subtract with bORrow r32 from r/m32
+   OPCODE_NEXT( SBB, 0x19,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( SBB, 0x1a,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //1A / r SBB r8,r/m8 Subtract with bORrow r/m8 from r8
+   OPCODE_NEXT( SBB, 0x1a,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( SBB, 0x66,0x1b,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //1B / r SBB r16,r/m16 Subtract with bORrow r/m16 from r16
+   OPCODE_NEXT( SBB, 0x66,0x1b,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM)
+   OPCODE_NEXT( SBB, 0x1b,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //1B / r SBB r32,r/m32 Subtract with bORrow r/m32 from r32
+   OPCODE_NEXT( SBB, 0x1b,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
+
+   OPCODE_FIRST(TEST,0xa8,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //A8 ib TEST AL, imm8 AND imm8 with AL; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0x66,0xa9,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //A9 iw TEST AX, imm16 AND imm16 with AX; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0xa9,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //A9 id TEST EAX, imm32 AND imm32 with EAX; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0xf6,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R0)     //F6 /0 ib TEST r/m8,imm8 AND imm8 with r/m8; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0xf6,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R0)
+   OPCODE_NEXT( TEST,0x66,0xf7,0x00,0x00, 0x02, REG16, IMM16, NON,   R0)     //F7 /0 iw TEST r/m16,imm16 AND imm16 with r/m6; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0x66,0xf7,0x00,0x00, 0x02, MEM16, IMM16, NON,   R0)
+   OPCODE_NEXT( TEST,0xf7,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R0)     //F7 /0 id TEST r/m32,imm32 AND imm32 with r/m32; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0xf7,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R0)
+   OPCODE_NEXT( TEST,0x84,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //84 / r TEST r/m8,r8 AND r8 with r/m8; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0x84,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( TEST,0x66,0x85,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //85 / r TEST r/m16,r16 AND r16 with r/m16; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0x66,0x85,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( TEST,0x85,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //85 / r TEST r/m32,r32 AND r32 with r/m32; set SF, ZF, PF accORding to result
+   OPCODE_NEXT( TEST,0x85,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+
+   OPCODE_FIRST(XOR, 0x34,0x00,0x00,0x00, 0x01, AL,    IMM8,  NON,   EMPTY)  //34 ib XOR AL, imm8 AL XOR imm8
+   OPCODE_NEXT( XOR, 0x66,0x35,0x00,0x00, 0x02, AX,    IMM16, NON,   EMPTY)  //35 iw XOR AX, imm16 AX XOR imm16
+   OPCODE_NEXT( XOR, 0x35,0x00,0x00,0x00, 0x01, EAX,   IMM32, NON,   EMPTY)  //35 id XOR EAX, imm32 EAX XOR imm32
+   OPCODE_NEXT( XOR, 0x80,0x00,0x00,0x00, 0x01, REG8,  IMM8,  NON,   R6)     //80 /6 ib XOR r/m8,imm8 r/m8 XOR imm8
+   OPCODE_NEXT( XOR, 0x80,0x00,0x00,0x00, 0x01, MEM8,  IMM8,  NON,   R6)
+   OPCODE_NEXT( XOR, 0x66,0x81,0x00,0x00, 0x02, REG16, IMM16, NON,   R6)     //81 /6 iw XOR r/m16,imm16 r/m16 XOR imm16
+   OPCODE_NEXT( XOR, 0x66,0x81,0x00,0x00, 0x02, MEM16, IMM16, NON,   R6)
+   OPCODE_NEXT( XOR, 0x81,0x00,0x00,0x00, 0x01, REG32, IMM32, NON,   R6)     //81 /6 id XOR r/m32,imm32 r/m32 XOR imm32
+   OPCODE_NEXT( XOR, 0x81,0x00,0x00,0x00, 0x01, MEM32, IMM32, NON,   R6)
+   OPCODE_NEXT( XOR, 0x66,0x83,0x00,0x00, 0x02, REG16, IMM8,  NON,   R6)     //83 /6 ib XOR r/m16,imm8 r/m16 XOR imm8 (sign-extended)
+   OPCODE_NEXT( XOR, 0x66,0x83,0x00,0x00, 0x02, MEM16, IMM8,  NON,   R6)
+   OPCODE_NEXT( XOR, 0x83,0x00,0x00,0x00, 0x01, REG32, IMM8,  NON,   R6)     //83 /6 ib XOR r/m32,imm8 r/m32 XOR imm8 (sign-extended)
+   OPCODE_NEXT( XOR, 0x83,0x00,0x00,0x00, 0x01, MEM32, IMM8,  NON,   R6)
+   OPCODE_NEXT( XOR, 0x30,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   RM_R)   //30 / r XOR r/m8,r8 r/m8 XOR r8
+   OPCODE_NEXT( XOR, 0x30,0x00,0x00,0x00, 0x01, MEM8,  REG8,  NON,   RM_R)
+   OPCODE_NEXT( XOR, 0x66,0x31,0x00,0x00, 0x02, REG16, REG16, NON,   RM_R)   //31 / r XOR r/m16,r16 r/m16 XOR r16
+   OPCODE_NEXT( XOR, 0x66,0x31,0x00,0x00, 0x02, MEM16, REG16, NON,   RM_R)
+   OPCODE_NEXT( XOR, 0x31,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   RM_R)   //31 / r XOR r/m32,r32 r/m32 XOR r32
+   OPCODE_NEXT( XOR, 0x31,0x00,0x00,0x00, 0x01, MEM32, REG32, NON,   RM_R)
+   OPCODE_NEXT( XOR, 0x32,0x00,0x00,0x00, 0x01, REG8,  REG8,  NON,   R_RM)   //32 / r XOR r8,r/m8 r8 XOR r/m8
+   OPCODE_NEXT( XOR, 0x32,0x00,0x00,0x00, 0x01, REG8,  MEM8,  NON,   R_RM)
+   OPCODE_NEXT( XOR, 0x66,0x33,0x00,0x00, 0x02, REG16, REG16, NON,   R_RM)   //33 / r XOR r16,r/m16 r8 XOR r/m8
+   OPCODE_NEXT( XOR, 0x66,0x33,0x00,0x00, 0x02, REG16, MEM16, NON,   R_RM) 
+   OPCODE_NEXT( XOR, 0x33,0x00,0x00,0x00, 0x01, REG32, REG32, NON,   R_RM)   //33 / r XOR r32,r/m32 r8 XOR r/m8
+   OPCODE_NEXT( XOR, 0x33,0x00,0x00,0x00, 0x01, REG32, MEM32, NON,   R_RM)
