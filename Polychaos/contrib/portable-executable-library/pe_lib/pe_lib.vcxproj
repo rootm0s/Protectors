@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="entropy.cpp" />
+    <ClCompile Include="file_version_info.cpp" />
+    <ClCompile Include="message_table.cpp" />
+    <ClCompile Include="pe_bound_import.cpp" />
+    <ClCompile Include="pe_checksum.cpp" />
+    <ClCompile Include="pe_directory.cpp" />
+    <ClCompile Include="pe_load_config.cpp" />
+    <ClCompile Include="pe_properties.cpp" />
+    <ClCompile Include="pe_properties_generic.cpp" />
+    <ClCompile Include="pe_rebuilder.cpp" />
+    <ClCompile Include="pe_resource_viewer.cpp" />
+    <ClCompile Include="pe_section.cpp" />
+    <ClCompile Include="pe_tls.cpp" />
+    <ClCompile Include="pe_debug.cpp" />
+    <ClCompile Include="pe_dotnet.cpp" />
+    <ClCompile Include="pe_exception_directory.cpp" />
+    <ClCompile Include="pe_exports.cpp" />
+    <ClCompile Include="pe_imports.cpp" />
+    <ClCompile Include="pe_base.cpp" />
+    <ClCompile Include="pe_exception.cpp" />
+    <ClCompile Include="pe_factory.cpp" />
+    <ClCompile Include="pe_resource_manager.cpp" />
+    <ClCompile Include="pe_relocations.cpp" />
+    <ClCompile Include="pe_resources.cpp" />
+    <ClCompile Include="pe_rich_data.cpp" />
+    <ClCompile Include="resource_bitmap_reader.cpp" />
+    <ClCompile Include="resource_bitmap_writer.cpp" />
+    <ClCompile Include="resource_cursor_icon_writer.cpp" />
+    <ClCompile Include="resource_data_info.cpp" />
+    <ClCompile Include="resource_cursor_icon_reader.cpp" />
+    <ClCompile Include="resource_message_list_reader.cpp" />
+    <ClCompile Include="resource_string_table_reader.cpp" />
+    <ClCompile Include="resource_version_info_reader.cpp" />
+    <ClCompile Include="resource_version_info_writer.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="version_info_editor.cpp" />
+    <ClCompile Include="version_info_viewer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="entropy.h" />
+    <ClInclude Include="file_version_info.h" />
+    <ClInclude Include="message_table.h" />
+    <ClInclude Include="pe_bliss_resources.h" />
+    <ClInclude Include="pe_bound_import.h" />
+    <ClInclude Include="pe_checksum.h" />
+    <ClInclude Include="pe_debug.h" />
+    <ClInclude Include="pe_directory.h" />
+    <ClInclude Include="pe_dotnet.h" />
+    <ClInclude Include="pe_exception_directory.h" />
+    <ClInclude Include="pe_exports.h" />
+    <ClInclude Include="pe_imports.h" />
+    <ClInclude Include="pe_base.h" />
+    <ClInclude Include="pe_bliss.h" />
+    <ClInclude Include="pe_exception.h" />
+    <ClInclude Include="pe_factory.h" />
+    <ClInclude Include="pe_load_config.h" />
+    <ClInclude Include="pe_properties.h" />
+    <ClInclude Include="pe_properties_generic.h" />
+    <ClInclude Include="pe_rebuilder.h" />
+    <ClInclude Include="pe_resource_manager.h" />
+    <ClInclude Include="pe_resource_viewer.h" />
+    <ClInclude Include="pe_section.h" />
+    <ClInclude Include="pe_structures.h" />
+    <ClInclude Include="pe_relocations.h" />
+    <ClInclude Include="pe_resources.h" />
+    <ClInclude Include="pe_rich_data.h" />
+    <ClInclude Include="pe_tls.h" />
+    <ClInclude Include="resource_bitmap_reader.h" />
+    <ClInclude Include="resource_bitmap_writer.h" />
+    <ClInclude Include="resource_data_info.h" />
+    <ClInclude Include="resource_cursor_icon_reader.h" />
+    <ClInclude Include="resource_cursor_icon_writer.h" />
+    <ClInclude Include="resource_internal.h" />
+    <ClInclude Include="resource_message_list_reader.h" />
+    <ClInclude Include="resource_string_table_reader.h" />
+    <ClInclude Include="resource_version_info_reader.h" />
+    <ClInclude Include="resource_version_info_writer.h" />
+    <ClInclude Include="stdint_defs.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="version_info_editor.h" />
+    <ClInclude Include="version_info_types.h" />
+    <ClInclude Include="version_info_viewer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1461F543-D1FA-4E4C-B6D7-0F879F566035}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>pe_bliss</RootNamespace>
+    <ProjectName>pe_bliss</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WIN64;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_WIN64;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

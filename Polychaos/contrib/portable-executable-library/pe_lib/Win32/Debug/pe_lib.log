@@ -1,0 +1,41 @@
+﻿  version_info_viewer.cpp
+  version_info_editor.cpp
+  utils.cpp
+  resource_version_info_writer.cpp
+  resource_version_info_reader.cpp
+  resource_string_table_reader.cpp
+  resource_message_list_reader.cpp
+  resource_cursor_icon_reader.cpp
+  resource_data_info.cpp
+  resource_cursor_icon_writer.cpp
+  resource_bitmap_writer.cpp
+  resource_bitmap_reader.cpp
+  pe_rich_data.cpp
+  pe_resources.cpp
+  pe_relocations.cpp
+  pe_resource_manager.cpp
+  pe_factory.cpp
+  pe_exception.cpp
+  pe_base.cpp
+  pe_imports.cpp
+  Generating Code...
+  Compiling...
+  pe_exports.cpp
+  pe_exception_directory.cpp
+  pe_dotnet.cpp
+  pe_debug.cpp
+  pe_tls.cpp
+  pe_section.cpp
+  pe_resource_viewer.cpp
+  pe_rebuilder.cpp
+  pe_properties_generic.cpp
+  pe_properties.cpp
+  pe_load_config.cpp
+  pe_directory.cpp
+  pe_checksum.cpp
+  pe_bound_import.cpp
+  message_table.cpp
+  file_version_info.cpp
+  entropy.cpp
+  Generating Code...
+  pe_lib.vcxproj -> C:\Users\rmt01\Dropbox\WindowsBox\Kodning\Fusk\Mutation\Polychaos-master\build\Win32\Debug\pe_bliss.lib
