@@ -1,0 +1,5 @@
+﻿  Main.cpp
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\contrib\portable-executable-library\pe_lib\pe_structures.h(473): warning C4201: nonstandard extension used: nameless struct/union
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\contrib\portable-executable-library\pe_lib\pe_structures.h(485): warning C4201: nonstandard extension used: nameless struct/union
+  PolychaosConsole.vcxproj -> C:\Users\rmt01\Dropbox\WindowsBox\Kodning\Fusk\Mutation\Polychaos-master\build\Win32\Debug\PolychaosConsole.exe
+  PolychaosConsole.vcxproj -> C:\Users\rmt01\Dropbox\WindowsBox\Kodning\Fusk\Mutation\Polychaos-master\build\Win32\Debug\PolychaosConsole.pdb (Partial PDB)

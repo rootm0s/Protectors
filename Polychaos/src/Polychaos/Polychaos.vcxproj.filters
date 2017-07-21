@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="!Common">
+      <UniqueIdentifier>{ff5722a7-5e3e-4448-a8c3-58c47e315b80}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LDasm.h" />
+    <ClInclude Include="MutationEngine.h" />
+    <ClInclude Include="MutationDef.h" />
+    <ClInclude Include="MutationImpl.h" />
+    <ClInclude Include="Utils.hpp" />
+    <ClInclude Include="PEMutator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LDasm.c" />
+    <ClCompile Include="MutationEngine.cpp" />
+    <ClCompile Include="MutationImpl.cpp" />
+    <ClCompile Include="PEMutator.cpp" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+﻿  LDasm.c
+  PEMutator.cpp
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\contrib\portable-executable-library\pe_lib\pe_structures.h(473): warning C4201: nonstandard extension used: nameless struct/union
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\contrib\portable-executable-library\pe_lib\pe_structures.h(485): warning C4201: nonstandard extension used: nameless struct/union
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\pemutator.cpp(87): warning C4456: declaration of 'lastSec' hides previous local declaration
+  c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\pemutator.cpp(65): note: see declaration of 'lastSec'
+c:\program files (x86)\microsoft visual studio\2017\professional\vc\tools\msvc\14.10.25017\include\utility(217): warning C4244: 'initializing': conversion from 'uint32_t' to 'uint16_t', possible loss of data
+  c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\pemutator.cpp(392): note: see reference to function template instantiation 'std::pair<uint32_t,uint16_t>::pair<uint32_t,uint32_t,void,0>(std::pair<uint32_t,uint32_t> &&) noexcept' being compiled
+  c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\pemutator.cpp(392): note: see reference to function template instantiation 'std::pair<uint32_t,uint16_t>::pair<uint32_t,uint32_t,void,0>(std::pair<uint32_t,uint32_t> &&) noexcept' being compiled
+  MutationImpl.cpp
+  MutationEngine.cpp
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\mutationengine.cpp(536): warning C4456: declaration of 'i' hides previous local declaration
+  c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\mutationengine.cpp(484): note: see declaration of 'i'
+c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\mutationengine.cpp(542): warning C4456: declaration of 'i' hides previous local declaration
+  c:\users\rmt01\dropbox\windowsbox\kodning\fusk\mutation\polychaos-master\src\polychaos\mutationengine.cpp(484): note: see declaration of 'i'
+  Generating Code...
+  Polychaos.vcxproj -> C:\Users\rmt01\Dropbox\WindowsBox\Kodning\Fusk\Mutation\Polychaos-master\build\Win32\Debug\Polychaos.lib
