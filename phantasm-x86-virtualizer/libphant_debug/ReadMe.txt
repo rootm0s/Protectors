@@ -1,0 +1,1 @@
+"Dummy" project to add the VM obj to a lib file
