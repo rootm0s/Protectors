@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+'''
+OWASP ZSC
+https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
+https://github.com/zscproject/OWASP-ZSC
+http://api.z3r0d4y.com/
+https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
+'''
+from core.alert import *
+from core.compatible import version
+
+
+def obf_code(lang, encode, filename, content,cli):
+    if version() is 3:
+        content = content.decode('utf-8')
+    start = getattr(
+        __import__('lib.encoder.%s.%s' % (lang, encode),
+                   fromlist=['start']),
+        'start')  #import endoing module
+    content = start(content,cli)  #encoded content as returned value
+    if version() is 3:
+        content = bytes(content, 'utf-8')
+    f = open(filename, 'wb')  #writing content
+    f.write(content)
+    f.close()
+    info('file "%s" encoded successfully!\n' % filename)
+    return
